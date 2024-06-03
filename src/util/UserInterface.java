@@ -1,5 +1,6 @@
 package util;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserInterface{
@@ -11,10 +12,16 @@ public class UserInterface{
     public double askPropertyValue() {
         double propertyValue;
         do {
-            System.out.print("Digite o valor do imóvel: ");
-            propertyValue = scanner.nextDouble();
-            if (propertyValue <= 0){
-                System.out.print("Erro: O valor do imóvel deve ser maior que 0. Tente novamente. ");
+            try {
+                System.out.print("Digite o valor do imóvel: ");
+                String propertyValueStr = scanner.next();
+                propertyValue = Double.parseDouble(propertyValueStr.replace(',', '.'));
+                if (propertyValue <= 0){
+                    System.out.println("Erro: O valor do imóvel deve ser maior que 0. Tente novamente. ");
+                }
+            }catch (NumberFormatException exception) {
+                System.out.println("Erro: O valor do imóvel deve ser um número. Tente novamente. ");
+                propertyValue = 0;
             }
         }while (propertyValue <= 0);
         return propertyValue;
@@ -22,10 +29,16 @@ public class UserInterface{
     public int askFundingPeriod(){
         int fundingPeriod;
         do {
-            System.out.print("Digite o prazo do financiamento: ");
-            fundingPeriod = scanner.nextInt();
-            if (fundingPeriod <= 0){
-                System.out.print("Erro: O prazo de financiamento deve ser maior que 0. Tente novamente. ");
+            try {
+                System.out.print("Digite o prazo do financiamento: ");
+                String fundingPeriodStr = scanner.next();
+                fundingPeriod = Integer.parseInt(fundingPeriodStr.replace(',','.'));
+                if (fundingPeriod <= 0){
+                    System.out.println("Erro: O prazo de financiamento deve ser maior que 0. Tente novamente. ");
+                }
+            }catch (NumberFormatException exception){
+                System.out.println("Erro: O prazo de financiamento deve ser um número. Tente novamente. ");
+                fundingPeriod = 0;
             }
         }while (fundingPeriod <= 0);
         return fundingPeriod;
@@ -33,10 +46,16 @@ public class UserInterface{
     public double askAnnualFee(){
         double annualfee;
         do {
-            System.out.print("Digite a taxa de juros anual: ");
-            annualfee = scanner.nextDouble();
-            if (annualfee < 0){
-                System.out.print("Erro: A taxa de juros anual deve ser maior ou igual a 0. Tente novamente. ");
+            try {
+                System.out.print("Digite a taxa de juros anual: ");
+                String annualfeeStr = scanner.next();
+                annualfee = Double.parseDouble(annualfeeStr.replaceAll("%", ""));
+                if (annualfee < 0){
+                    System.out.print("Erro: O valor do imóvel deve ser maior que 0. Tente novamente. ");
+                }
+            }catch (NumberFormatException exception) {
+                System.out.println("Erro: O valor do imóvel deve ser um número. Tente novamente. ");
+                annualfee = 0;
             }
         }while (annualfee < 0);
             return annualfee;
